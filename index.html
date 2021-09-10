@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PONG</title>
+
+    <script src="animacao.js"></script>
+    <script src="teclado.js"></script>
+    <script src="colisor.js"></script>
+    <script src="fundo.js"></script>
+    <script src="bola.js"></script>
+
+</head>
+
+<body>
+    
+    <canvas id="canvas" width="500" height="400"></canvas>
+
+    <script>
+
+        let canvas = document.getElementById("canvas");
+        let context = canvas.getContext("2d");
+
+        let animacao;
+        let teclado;
+        let colisor;
+        let musica;
+        let fundo;
+
+        carregarMusica();
+        iniciarObjetos();
+
+        function carregarMusica() {
+
+            musica = new Audio();
+            musica.src = "snd/musica.mp3";
+            musica.load();
+            musica.volume = 0.8;
+            musica.loop = true;
+
+        }
+
+        function iniciarObjetos() {
+
+            animacao = new Animacao(context);
+            teclado = new Teclado(document);
+            colisor = new Colisor();
+            fundo = new Fundo(context);
+            bola = new Bola(context);
+
+            animacao.novoSprite(fundo);
+            animacao.novoSprite(bola);
+
+            animacao.novoProcessamento(colisor);
+
+            configuracoesIniciais();
+
+        }
+
+        function configuracoesIniciais() {
+
+            bola.posicionar();
+            bola.raio = 12;
+            bola.velocidadeX = 200;
+            bola.velocidadeY = 200;
+
+            animacao.ligar();
+            musica.play();
+
+        }
+
+    </script>
+
+</body>
+
+</html>
