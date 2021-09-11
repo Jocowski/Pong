@@ -1,3 +1,8 @@
+let SOM_RAQUETADA = new Audio();
+SOM_RAQUETADA.src = "snd/raquetada.mp3";
+SOM_RAQUETADA.volume = 1;
+SOM_RAQUETADA.load();
+
 function Bola(context) {
 
     this.context = context;
@@ -6,6 +11,7 @@ function Bola(context) {
     this.y = 0;
     this.velocidadeX = 0;
     this.velocidadeY = 0;
+    this.raio = 12;
     this.cor = "white";
 
 }
@@ -50,23 +56,28 @@ Bola.prototype = {
     retangulosColisao: function() {
 
         return [
-
+            
             {
 
-                x: this.x,
-                y: this.y,
-                largura: this.raio * 2,
-                altura: this.raio * 2
+            x: this.x - this.raio,
+            y: this.y - this.raio,
+            largura: this.raio * 2,
+            altura: this.raio * 2
 
             }
-
-        ]
+        
+        ];
 
     },
     
     colidiuCom: function(sprite) {
 
+        if ((sprite instanceof Player) || (sprite instanceof Computador)) {
 
+            this.velocidadeX *= -1;
+            SOM_RAQUETADA.play();
+
+        }
 
     },
 

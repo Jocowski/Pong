@@ -15,6 +15,9 @@
     <script src="colisor.js"></script>
     <script src="fundo.js"></script>
     <script src="bola.js"></script>
+    <script src="player.js"></script>
+    <script src="computador.js"></script>
+    <script src="painel.js"></script>
 
 </head>
 
@@ -32,6 +35,10 @@
         let colisor;
         let musica;
         let fundo;
+        let bola;
+        let player;
+        let computador;
+        let painel;
 
         carregarMusica();
         iniciarObjetos();
@@ -41,7 +48,7 @@
             musica = new Audio();
             musica.src = "snd/musica.mp3";
             musica.load();
-            musica.volume = 0.8;
+            musica.volume = 0.5;
             musica.loop = true;
 
         }
@@ -53,9 +60,19 @@
             colisor = new Colisor();
             fundo = new Fundo(context);
             bola = new Bola(context);
+            painel = new Painel(context, bola);
+            player = new Player(context, teclado);
+            computador = new Computador(context, bola, painel);
 
             animacao.novoSprite(fundo);
             animacao.novoSprite(bola);
+            animacao.novoSprite(player);
+            animacao.novoSprite(computador);
+            animacao.novoSprite(painel);
+
+            colisor.novoSprite(bola);
+            colisor.novoSprite(player);
+            colisor.novoSprite(computador);
 
             animacao.novoProcessamento(colisor);
 
@@ -66,12 +83,17 @@
         function configuracoesIniciais() {
 
             bola.posicionar();
-            bola.raio = 12;
             bola.velocidadeX = 200;
             bola.velocidadeY = 200;
 
+            player.posicionar();
+            player.velocidade = 250;
+
+            computador.posicionar();
+            computador.velocidadeMax = 250;
+
             animacao.ligar();
-            musica.play();
+            //musica.play();
 
         }
 
